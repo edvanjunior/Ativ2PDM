@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Bora Rachar</string>
+    <string name="home_screen_title">Bora\nRachar!</string>
+    <string name="share_message">Valor que cada pessoa pagará é R$ </string>
+</resources>
