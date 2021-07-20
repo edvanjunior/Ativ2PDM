@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         totalVal.addTextChangedListener(this);
         peopleCount.addTextChangedListener(this);
 
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+            }
+        });
 
 
 
