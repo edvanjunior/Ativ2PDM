@@ -1,15 +1,14 @@
 package com.example.atv2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -18,16 +17,13 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
-
 public class MainActivity extends AppCompatActivity implements TextWatcher {
-    private double value = 0.0;
-    private int people = 0;
     private double result = 0;
-    private DecimalFormat df = new DecimalFormat("0.00");
+    private  DecimalFormat df = new DecimalFormat("0.00");
 
 
     EditText totalVal;
-    EditText peopleCount;
+    EditText numPeople;
     TextView valuePerPerson;
 
     FloatingActionButton shareButton;
@@ -40,36 +36,38 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Objects.requireNonNull(getSupportActionBar()).hide();
 
         totalVal = findViewById(R.id.totalValue);
-        peopleCount = findViewById(R.id.numPeople);
+        numPeople = findViewById(R.id.numPeople);
         valuePerPerson = findViewById(R.id.valuePerPerson);
 
         shareButton = findViewById(R.id.shareButton);
         voiceButton = findViewById(R.id.voiceButton);
 
 
-        valuePerPerson.setText("R$ 0.00");
+        valuePerPerson.setText("$ 0.00");
         totalVal.addTextChangedListener(this);
-        peopleCount.addTextChangedListener(this);
+        numPeople.addTextChangedListener(this);
 
-        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
+        tts = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR) {
+                Locale localeBR = new Locale("pt", "BR");
+                tts.setLanguage(localeBR);
             }
         });
 
+        voiceButton.setOnClickListener(v -> {
+            String text = String.valueOf((int) result);
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        });
 
 
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message) + df.format(result));
-                startActivity(intent);
-            }
+        shareButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message) + df.format(result));
+            startActivity(intent);
         });
     }
 
@@ -86,17 +84,17 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         try {
-            value = Double.parseDouble(totalVal.getText().toString());
-            people = Integer.parseInt(peopleCount.getText().toString());
+            double value = Double.parseDouble(totalVal.getText().toString());
+            int people = Integer.parseInt(numPeople.getText().toString());
 
             if ((value != 0) && (people != 0)) {
                 BigDecimal bd = new BigDecimal(value / people).setScale(2, RoundingMode.HALF_UP);
                 result = bd.doubleValue();
 
-                valuePerPerson.setText("R$ " + df.format(result));
+                valuePerPerson.setText("$ " + df.format(result));
             }
         } catch (Exception e) {
-            valuePerPerson.setText("R$ 0.00");
+            valuePerPerson.setText("$ 0.00");
             result = 0;
         }
     }

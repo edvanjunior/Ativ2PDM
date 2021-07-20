@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Let\'s Split</string>
+    <string name="home_screen_title">Let\'s Split!</string>
+    <string name="share_message">Value per Person $ </string>
+    <string name="money_simbol">Money Simbol</string>
+    <string name="value_to_calculate">Write the value to calculate</string>
+    <string name="person_icon">People Icon</string>
+    <string name="people_number">Write here the people number</string>
+    <string name="value_per_person">Value per person</string>
+    <string name="share">Share</string>
+    <string name="listen_value">Tap here to listen the split value</string>
 </resources>

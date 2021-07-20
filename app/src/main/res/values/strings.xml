@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">Bora Rachar</string>
-    <string name="home_screen_title">Bora\nRachar!</string>
-    <string name="share_message">Valor que cada pessoa pagará é R$ </string>
+    <string name="app_name">Vamo Rachar</string>
+    <string name="home_screen_title">Vamo Rachar!</string>
+    <string name="share_message">Valor por pessoa R$ </string>
+    <string name="money_simbol">Símbolo de cifrão</string>
+    <string name="value_to_calculate">Escreva o valor a ser calculado</string>
+    <string name="person_icon">Ícone de pessoas</string>
+    <string name="people_number">Escreva aqui o número de pessoas</string>
+    <string name="value_per_person">Valor por pessoa</string>
+    <string name="share">Compartilhar</string>
+    <string name="listen_value">Toque aqui para ouvir valor</string>
 </resources>
